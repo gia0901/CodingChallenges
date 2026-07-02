@@ -1,0 +1,57 @@
+# 10. Heap / Priority Queue ★★☆☆☆
+
+Khi cần **liên tục lấy phần tử lớn/nhỏ nhất**: Top-K, k-way merge, running median.
+
+## Các pattern cốt lõi (skeleton C++)
+
+### Pattern A — Top-K bằng min-heap kích thước k
+```cpp
+priority_queue<int, vector<int>, greater<int>> pq; // min-heap
+for (int x : a) {
+    pq.push(x);
+    if ((int)pq.size() > k) pq.pop();  // loại phần tử nhỏ nhất
+}
+// pq chứa k phần tử lớn nhất; pq.top() = phần tử lớn thứ k
+```
+
+### Pattern B — K-way merge
+```cpp
+// pq chứa (giá trị, nguồn); luôn lấy nhỏ nhất rồi nạp phần tử kế của nguồn đó
+priority_queue<tuple<int,int,int>, vector<tuple<int,int,int>>, greater<>> pq;
+```
+
+### Pattern C — Two heaps (running median)
+```cpp
+priority_queue<int> lo;                                   // max-heap: nửa nhỏ
+priority_queue<int, vector<int>, greater<int>> hi;        // min-heap: nửa lớn
+// giữ |lo| - |hi| ∈ {0,1}; median = lo.top() hoặc trung bình 2 đỉnh
+```
+
+## Bài cốt lõi (3 bài)
+
+| # | Bài | Pattern | Complexity mục tiêu |
+|---|-----|---------|---------------------|
+| 1 | Kth Largest Element in an Array | A | Time O(n log k) |
+| 2 | K Closest Points to Origin | A (max-heap size k) | Time O(n log k) |
+| 3 | Merge k Sorted Lists | B | Time O(N log k) |
+
+### 1. Kth Largest Element
+> Min-heap giữ k phần tử lớn nhất; đỉnh là đáp án. (Hoặc quickselect O(n) trung bình.)
+
+### 2. K Closest Points to Origin
+> Max-heap kích thước k theo khoảng cách bình phương; đẩy ra điểm xa nhất khi vượt k.
+- Bẫy: dùng **khoảng cách bình phương**, khỏi `sqrt` (tránh sai số + tốn kém).
+
+### 3. Merge k Sorted Lists
+> Min-heap chứa đầu mỗi list; pop nhỏ nhất, đẩy node kế của nó vào heap.
+
+## Pitfall C++ hay gặp
+
+- **Mặc định `priority_queue` là max-heap**; muốn min-heap dùng `greater<>`.
+- **Custom comparator** cho struct/tuple: nhớ chiều so sánh (comparator trả `true` nghĩa là "xuống dưới").
+- Top-K: heap kích thước **k** cho O(n log k), tốt hơn sort O(n log n) khi k nhỏ.
+- Không có **decrease-key** tiện lợi; nếu cần (vd Dijkstra) thì push bản mới và bỏ qua bản cũ.
+
+## Liên hệ
+
+- Quickselect (thay heap cho Kth Largest) dựa trên partition của [Binary Search/Sorting](../04_binary_search/README.md).
