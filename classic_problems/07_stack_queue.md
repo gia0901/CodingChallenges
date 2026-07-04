@@ -30,6 +30,17 @@ for (int i = 0; i < n; ++i) {
 }
 ```
 
+Cách chạy — next greater của `[2,1,3]`:
+
+```
+ i=0 a=2  st rỗng -> push        st=[2]
+ i=1 a=1  1<2 không pop -> push  st=[2,1]
+ i=2 a=3  a[top]=1<3 pop, ans[1]=3
+          a[top]=2<3 pop, ans[0]=3
+          push                   st=[3]
+ => ans = [3, 3, -1]   (chỉ số/giá trị tùy bài)
+```
+
 ### Pattern C — Monotonic deque (sliding window maximum)
 ```cpp
 deque<int> dq; // index, a[dq] giảm dần
@@ -62,6 +73,12 @@ for (int i = 0; i < n; ++i) {
 ### 4. Sliding Window Maximum
 > Max của mỗi cửa sổ độ dài `k`. Pattern C — mỗi index vào/ra deque đúng 1 lần → O(n).
 
+## Vì sao monotonic stack là O(n)
+
+Nhìn có vòng `while` lồng trong `for` nhưng **không phải O(n²)**: mỗi index được **push đúng 1
+lần và pop tối đa 1 lần** trong cả thuật toán. Tổng số thao tác pop ≤ n → cộng lại O(n)
+(amortized). Đây là cùng kiểu lập luận với sliding window: đếm theo "mỗi phần tử vào/ra 1 lần".
+
 ## Pitfall C++ hay gặp
 
 - **Luôn `empty()` trước `top()`/`front()`** — gọi trên container rỗng là UB.
@@ -71,4 +88,4 @@ for (int i = 0; i < n; ++i) {
 
 ## Liên hệ
 
-- Monotonic deque là biến thể tối ưu của sliding window ([String](../03_string/README.md)) khi cần max/min cửa sổ.
+- Monotonic deque là biến thể tối ưu của sliding window ([String](03_string.md)) khi cần max/min cửa sổ.

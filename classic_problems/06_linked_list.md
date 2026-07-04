@@ -15,6 +15,13 @@ while (/* còn phần tử */) {
 return dummy.next;
 ```
 
+Dummy giúp head được xử lý y hệt mọi node khác (không cần `if (head == null)` riêng):
+
+```
+ dummy -> [ ] -> [ ] -> [ ]     tail luôn trỏ node cuối đã nối
+   ^tail đầu tiên             trả về dummy.next = head thật
+```
+
 ### Pattern B — Fast/slow (middle, cycle)
 ```cpp
 ListNode* slow = head; ListNode* fast = head;
@@ -26,17 +33,33 @@ while (fast && fast->next) {
 // slow = node giữa
 ```
 
+Fast đi gấp đôi → khi fast hết list, slow ở giữa:
+
+```
+ 1 -> 2 -> 3 -> 4 -> 5 -> null
+ S    S         S            slow: 1,2,3
+ F         F         F(null) fast: 1,3,5 -> dừng, slow=3 (giữa)
+```
+
 ### Pattern C — Reverse in-place
 ```cpp
 ListNode* prev = nullptr;
 ListNode* cur = head;
 while (cur) {
-    ListNode* nxt = cur->next; // lưu trước khi ghi đè
+    ListNode* nxt = cur->next; // lưu TRƯỚC khi ghi đè
     cur->next = prev;
     prev = cur;
     cur = nxt;
 }
 return prev; // head mới
+```
+
+Đảo từng cạnh, luôn giữ `nxt` để không mất phần còn lại:
+
+```
+ null <- 1    2 -> 3 -> null      prev=1, cur=2, nxt=3
+ prev    cur  ...
+ null <- 1 <- 2    3 -> null      prev=2, cur=3
 ```
 
 ## Bài cốt lõi (5 bài)
@@ -54,11 +77,12 @@ return prev; // head mới
 
 ### 2. Merge Two Sorted Lists
 > Trộn hai list sort thành một. Pattern A + so đầu hai list.
-- Đã có bản của bạn: [leetcode/linked_list/21_merge_two_sorted_lists.cpp](../../leetcode/linked_list/21_merge_two_sorted_lists.cpp) — ôn lại.
+- Đã có bản của bạn: [leetcode/linked_list/21_merge_two_sorted_lists.cpp](../leetcode/linked_list/21_merge_two_sorted_lists.cpp) — ôn lại.
 
 ### 3. Linked List Cycle
 > Phát hiện chu trình. Fast/slow gặp nhau → có cycle (Floyd).
-- Đã có: [leetcode/linked_list/141_linked_list_cycle.cpp](../../leetcode/linked_list/141_linked_list_cycle.cpp).
+- Đã có: [leetcode/linked_list/141_linked_list_cycle.cpp](../leetcode/linked_list/141_linked_list_cycle.cpp).
+- **Vì sao gặp nhau nếu có cycle**: khi cả hai đã vào vòng, mỗi bước khoảng cách fast→slow **giảm đúng 1** → chắc chắn về 0 (không thể nhảy qua). Không có cycle thì fast chạm `null` trước.
 
 ### 4. Middle of the Linked List
 > Fast đi 2 bước, slow đi 1 → khi fast hết, slow ở giữa.
@@ -76,4 +100,4 @@ return prev; // head mới
 
 ## Liên hệ
 
-- Fast/slow ở đây trùng ý tưởng với con trỏ cách nhau `k` trong [Array](../01_array/README.md).
+- Fast/slow ở đây trùng ý tưởng với con trỏ cách nhau `k` trong [Array](01_array.md).

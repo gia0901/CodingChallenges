@@ -12,6 +12,15 @@ __builtin_popcount(x)  // đếm số bit 1 (popcountll cho long long)
 (1 << k)               // bitmask bit thứ k  (dùng 1LL nếu k >= 31)
 ```
 
+Trực giác `x & (x-1)` xóa bit 1 thấp nhất — trừ 1 lật chuỗi bit thấp:
+
+```
+ x     = 1 0 1 1 0 0    (bit 1 thấp nhất ở vị trí 2)
+ x - 1 = 1 0 1 0 1 1    (bit đó -> 0, các bit dưới -> 1)
+ x&(x-1)=1 0 1 0 0 0    (đã xóa bit 1 thấp nhất)
+ -> lặp tới khi x==0 để đếm số bit 1 (Brian Kernighan)
+```
+
 ## Số học cơ bản (C++)
 ```cpp
 int gcd(int a, int b) { return b == 0 ? a : gcd(b, a % b); }   // Euclid
@@ -42,6 +51,12 @@ for (int i = 2; (long long)i * i <= N; ++i)
 ### 3. Count Primes
 > Đếm số nguyên tố `< n` bằng sàng Eratosthenes.
 
+## Vì sao XOR giải được Single Number
+
+XOR có tính **giao hoán + kết hợp** và `a ^ a = 0`, `a ^ 0 = a`. Nên khi XOR cả mảng, mọi
+phần tử xuất hiện 2 lần triệt tiêu thành 0, chỉ còn phần tử duy nhất. Không cần bộ nhớ phụ
+→ O(1) space, thay vì hash đếm tần suất O(n) space.
+
 ## Pitfall C++ hay gặp
 
 - **Shift overflow**: `1 << 31` trên `int` là UB → dùng `1LL << k`.
@@ -51,4 +66,4 @@ for (int i = 2; (long long)i * i <= N; ++i)
 
 ## Liên hệ
 
-- Bitmask là nền cho DP trạng thái ([DP](../09_dp/README.md)) khi n nhỏ (≤ ~20); XOR/prefix hay kết hợp với [Hashing](../02_hashing/README.md).
+- Bitmask là nền cho DP trạng thái ([DP](09_dp.md)) khi n nhỏ (≤ ~20); XOR/prefix hay kết hợp với [Hashing](02_hashing.md).

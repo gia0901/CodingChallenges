@@ -3,25 +3,27 @@
 ## Overview
 - Đây là một repository để lưu trữ các bài coding interview (do tôi tự code).
 - Gồm 2 phần chính:
-    1. **Classic problems**: các bài kinh điển DSA, tổ chức theo chủ đề.
-    2. **Leetcode problems**: các bài Leetcode tôi giải, tổ chức theo chủ đề (string, array, two-pointers, ...).
+    1. **`classic_problems/`**: **tài liệu lý thuyết** theo topic — pattern/kỹ thuật, skeleton C++, ASCII minh họa, phần "vì sao đúng", pitfall. **Chỉ có file `.md`, không chứa code lời giải.**
+    2. **`leetcode/`**: các bài Leetcode tôi tự giải (`.cpp`), tổ chức theo topic. Một topic có thể kèm `README.md` ghi chú gắn với chính các bài đã giải.
 - Ngôn ngữ chính: **C++**.
 
 ## Cấu trúc thư mục
-- Tổ chức theo chủ đề (topic-based), ví dụ:
-    ```
-    classic-problems/
-        array/
-        string/
-        graph/
-        dp/
-    leetcode/
-        two-pointers/
-        sliding-window/
-        binary-search/
-    ```
-- Một bài có thể gồm file code (`.cpp`) và, nếu cần, ghi chú kèm theo (đề bài, độ phức tạp, ý tưởng).
-- Khi tôi thêm bài mới nhưng chưa rõ đặt vào đâu, gợi ý chủ đề phù hợp thay vì tự tạo cấu trúc mới tùy tiện.
+```
+classic_problems/
+    README.md              # index tổng (bảng lộ trình 13 topic)
+    01_array.md            # mỗi topic là 1 file .md phẳng, đặt tên theo topic
+    02_hashing.md
+    03_string.md
+    ...
+leetcode/
+    01_array/*.cpp         # code lời giải, tổ chức topic-based
+    02_hashing/*.cpp
+    03_string/*.cpp + README.md   # kèm ghi chú gắn bài (nếu có)
+    ...
+```
+- **Tài liệu lý thuyết** → thêm/sửa trong `classic_problems/NN_topic.md` (không tạo lại folder con). **Code** → đặt trong `leetcode/<topic>/`.
+- Một bài gồm file code (`.cpp`) và, nếu cần, ghi chú kèm theo (đề bài, độ phức tạp, ý tưởng).
+- Khi tôi thêm bài mới nhưng chưa rõ đặt vào đâu, gợi ý topic phù hợp thay vì tự tạo cấu trúc mới tùy tiện.
 
 ## Vai trò & nguyên tắc
 - **Vai trò của bạn**: người review code. **Không viết hộ lời giải khi chưa được yêu cầu** — kể cả khi bài của tôi sai, hãy hướng dẫn để tôi tự sửa trước.

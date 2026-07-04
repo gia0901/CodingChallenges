@@ -17,6 +17,19 @@ while (left < right) {
 }
 ```
 
+Cách chạy — tìm cặp có tổng = `9` trong `[1,2,4,7,11,15]`:
+
+```
+ 1   2   4   7  11  15      L=0 R=5  sum=1+15=16 > 9 -> R--
+ L                   R
+ 1   2   4   7  11  15      L=0 R=4  sum=1+11=12 > 9 -> R--
+ L               R
+ 1   2   4   7  11  15      L=0 R=3  sum=1+7 =8  < 9 -> L++
+ L           R
+ 1   2   4   7  11  15      L=1 R=3  sum=2+7 =9  == target  ✓
+     L       R
+```
+
 ### Pattern B — Fast/slow (read-write, in-place)
 Sửa mảng tại chỗ với O(1) extra space. `slow` = vị trí ghi tiếp theo, `fast` = con trỏ đọc.
 
@@ -28,6 +41,19 @@ for (int fast = 0; fast < n; ++fast) {
     }
 }
 // slow = độ dài kết quả; a[0..slow-1] là mảng đã lọc
+```
+
+Cách chạy — lọc bỏ số 0 khỏi `[0,1,0,3,2]` (giữ thứ tự):
+
+```
+ idx    0  1  2  3  4
+ a  =   0  1  0  3  2
+        F                slow=0  a[0]=0 -> bỏ qua
+           F             slow=0  a[1]=1 -> ghi a[0]=1, slow=1
+              F          slow=1  a[2]=0 -> bỏ qua
+                 F       slow=1  a[3]=3 -> ghi a[1]=3, slow=2
+                    F    slow=2  a[4]=2 -> ghi a[2]=2, slow=3
+ => [1,3,2, .. ]  giữ [0..slow-1]
 ```
 
 ### Pattern C — Prefix sum / running value
@@ -72,13 +98,13 @@ for (int x : a) {
 ### 4. Container With Most Water
 > Mỗi phần tử là chiều cao một cột. Chọn 2 cột cho thùng chứa lớn nhất: `area = min(h[l], h[r]) * (r - l)`.
 
-- Pattern A. Luôn **di chuyển con trỏ ở cột thấp hơn** (di cột cao không thể cải thiện: chiều rộng giảm, chiều cao vẫn bị chặn bởi cột thấp).
-- Cần **giải thích được vì sao greedy đúng** — câu hỏi phỏng vấn hay đào chỗ này.
+- Pattern A. Luôn **di chuyển con trỏ ở cột thấp hơn**.
+- **Vì sao greedy đúng** (câu phỏng vấn hay đào): diện tích bị chặn bởi cột thấp. Nếu ta giữ cột thấp và dời cột cao vào trong, chiều rộng giảm mà chiều cao vẫn ≤ cột thấp → diện tích chỉ nhỏ đi. Vậy cột thấp đã "cạn" tiềm năng → loại nó an toàn, mỗi bước bỏ đúng 1 cột → O(n).
 
 ### 5. Maximum Subarray (Kadane)
 > Tổng lớn nhất của một đoạn con liên tiếp (ít nhất 1 phần tử).
 
-- Pattern C (skeleton ở trên).
+- Pattern C (skeleton ở trên). Mỗi bước chỉ 2 lựa chọn: **nối dài** (`running + x`) hay **bắt đầu lại** (`x`).
 - Bẫy: khởi tạo `best = a[0]` (không phải 0) để xử lý mảng toàn số âm.
 
 ## Pitfall C++ hay gặp
@@ -90,5 +116,5 @@ for (int x : a) {
 
 ## Liên hệ
 
-- **3Sum** ([leetcode/two_pointers/15_3Sum.cpp](../../leetcode/two_pointers/15_3Sum.cpp)) = sort + Pattern A lồng trong vòng lặp → ôn lại sau khi nắm 5 bài trên.
-- Sliding window (Pattern C với cửa sổ co giãn) sẽ đào sâu ở topic **String**.
+- **3Sum** ([leetcode/two_pointers/15_3Sum.cpp](../leetcode/two_pointers/15_3Sum.cpp)) = sort + Pattern A lồng trong vòng lặp → ôn lại sau khi nắm 5 bài trên.
+- Sliding window (Pattern C với cửa sổ co giãn) sẽ đào sâu ở topic [String](03_string.md).

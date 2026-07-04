@@ -14,6 +14,17 @@ for (auto& x : iv) {
 }
 ```
 
+Merge Intervals — sort theo start, gộp khi chồng lấn:
+
+```
+ vào:  [1,3] [2,6] [8,10] [9,12]
+        ├──┤
+          ├────┤              [1,3] & [2,6] chồng -> gộp [1,6]
+                  ├──┤
+                    ├───┤     [8,10] & [9,12] chồng -> gộp [8,12]
+ ra :  [1,6]       [8,12]
+```
+
 ### Pattern B — Trạng thái chạy (reach xa nhất)
 ```cpp
 int reach = 0;
@@ -40,15 +51,22 @@ return true;
 
 ### 3. Non-overlapping Intervals
 > Bỏ ít interval nhất để hết chồng lấn. **Sort theo end**, tham lam giữ interval kết thúc sớm nhất, đếm số phải bỏ.
-- Đây là chỗ cần lập luận vì sao "kết thúc sớm nhất" là lựa chọn tối ưu.
+
+## Vì sao "kết thúc sớm nhất" là lựa chọn tối ưu (exchange argument)
+
+Chọn interval kết thúc sớm nhất để lại **nhiều không gian nhất** cho các interval sau. Giả sử
+có nghiệm tối ưu không chọn interval kết thúc sớm nhất `x`: ta **đổi** interval đầu của nghiệm
+đó lấy `x` — vì `x` kết thúc sớm hơn (hoặc bằng), việc đổi không gây chồng lấn mới và số
+interval giữ được không giảm. Vậy luôn tồn tại nghiệm tối ưu chứa `x` → chọn tham lam an toàn.
+Đây là khuôn "exchange argument" điển hình để chứng minh greedy.
 
 ## Pitfall C++ hay gặp
 
 - **Chọn sai tiêu chí sort** (start vs end) làm hỏng tính đúng — mỗi bài một kiểu.
 - **Biên chạm nhau** (`[1,2]` và `[2,3]`): tùy đề coi là chồng hay không → quyết định `<` vs `<=`.
-- Greedy **không phải lúc nào cũng đúng** — nếu không chứng minh được, cân nhắc [DP](../09_dp/README.md).
+- Greedy **không phải lúc nào cũng đúng** — nếu không chứng minh được, cân nhắc [DP](09_dp.md).
 - Overflow khi cộng `i + a[i]` với giá trị lớn → cân nhắc kiểu rộng hơn.
 
 ## Liên hệ
 
-- Cùng khai thác việc sort như [Binary Search/Sorting](../04_binary_search/README.md); ranh giới greedy vs DP là điểm quyết định cách tiếp cận.
+- Cùng khai thác việc sort như [Binary Search/Sorting](04_binary_search.md); ranh giới greedy vs DP là điểm quyết định cách tiếp cận.

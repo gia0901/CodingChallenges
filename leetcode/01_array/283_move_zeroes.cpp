@@ -26,6 +26,7 @@ void ARR_moveZeroes(vector<int>& nums) {
     int n = nums.size();
     vector<int> res(n, 0);
     int cur_idx = 0;
+    
     for (int x : nums) {
         if (x) res[cur_idx++] = n;
     }

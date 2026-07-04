@@ -32,6 +32,15 @@ for (auto& w : words) {
 }
 ```
 
+Ý tưởng canonical key — mọi anagram quy về **cùng một dạng chuẩn**:
+
+```
+"eat"  --count-->  a1 e1 t1  --key-->  "#1#0..#1..#1.."  ┐
+"tea"  --count-->  a1 e1 t1  --key-->  "#1#0..#1..#1.."  ├─> cùng key -> 1 nhóm
+"ate"  --count-->  a1 e1 t1  --key-->  "#1#0..#1..#1.."  ┘
+"tan"  --count-->  a1 n1 t1  --key-->  "#1#..#1..#1.."   -> key khác -> nhóm khác
+```
+
 ## Bài cốt lõi (4 bài)
 
 | # | Bài | Pattern | Complexity mục tiêu |
@@ -51,17 +60,29 @@ for (auto& w : words) {
 > Có phần tử nào xuất hiện ≥ 2 lần không?
 
 - Pattern B. `insert().second == false` nghĩa là đã tồn tại. Hoặc so sánh `set.size()` với `a.size()`.
+- Trade-off thực tế: `sort + quét` (O(n log n), O(1) space, cache-friendly) đôi khi **chạy nhanh hơn** `unordered_set` (O(n) nhưng hashing + pointer-chasing tốn cache). Big-O không phải tất cả.
 
 ### 3. Group Anagrams
 > Gom các từ là anagram của nhau vào cùng nhóm.
 
 - Pattern C. Key = **chữ ký tần suất** (`array<int,26>` encode thành string) → O(k); nhanh hơn `sort(word)` là O(k log k).
+- Bẫy khi ghép key từ count: chèn **dấu phân cách** (`#`) để `[1,1]` và `[11]` không cho cùng chuỗi.
 
 ### 4. Longest Consecutive Sequence
 > Độ dài chuỗi số liên tiếp dài nhất (không cần liền kề trong mảng). Yêu cầu O(n).
 
 - Đưa hết vào `unordered_set`. Với mỗi `x` mà `x-1` **không** có trong set (điểm bắt đầu chuỗi), đếm `x, x+1, ...`.
-- Bẫy: chỉ đếm từ điểm start → mỗi phần tử được duyệt O(1) lần → tổng O(n).
+- **Vì sao O(n)** (không phải O(n²) dù có vòng lặp lồng): chỉ đếm từ điểm start, và các chuỗi rời nhau phân hoạch cả set → tổng số bước của mọi vòng đếm cộng lại = n. Cộng vòng `for` ngoài = n → 2n = O(n).
+
+```
+set = {1,2,3, 100,101}          x-1 có trong set? -> KHÔNG đếm (không phải start)
+ 1  -> 0 không có  => START, đếm 1,2,3         (len 3)
+ 2  -> 1 có        => bỏ qua
+ 3  -> 2 có        => bỏ qua
+100 -> 99 không có => START, đếm 100,101       (len 2)
+101 -> 100 có      => bỏ qua
+mỗi số bị "đếm" đúng 1 lần across tất cả các start.
+```
 
 ## Pitfall C++ hay gặp
 
@@ -69,7 +90,8 @@ for (auto& w : words) {
 - **Worst-case O(n)** mỗi thao tác do collision (average O(1)); hiếm ảnh hưởng phỏng vấn.
 - **Key phức** (pair/vector) cần custom hash → tránh bằng cách encode thành `string` hoặc số.
 - **Rehash tốn kém**: `reserve(n)` nếu biết trước số phần tử.
+- **Ordered vs unordered**: cần O(1) tra cứu dùng `unordered_*`; cần giữ thứ tự (như Longest Consecutive nếu đổi cách) thì `set`/`map` là O(log n)/op.
 
 ## Liên hệ
 
-- Trade-off kinh điển: **sorted + two pointers (O(1) space)** vs **hashing (O(n) space, không cần sort)** — xem lại topic [Array](../01_array/README.md).
+- Trade-off kinh điển: **sorted + two pointers (O(1) space)** vs **hashing (O(n) space, không cần sort)** — xem lại topic [Array](01_array.md).

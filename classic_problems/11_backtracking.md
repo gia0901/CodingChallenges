@@ -16,6 +16,20 @@ void backtrack(int start, vector<int>& path) {
 }
 ```
 
+Cây đệ quy cho Subsets của `[1,2,3]` — mỗi node là 1 nghiệm, `pop_back` là bước lùi:
+
+```
+                        [ ]
+          ┌──────────────┼──────────────┐
+        [1]             [2]            [3]
+      ┌───┴───┐          │
+   [1,2]    [1,3]      [2,3]
+     │
+  [1,2,3]
+
+đi xuống = push (chọn) ; quay lên = pop_back (undo) để thử nhánh kế
+```
+
 ## Các biến thể
 
 - **Tập con (Subsets)**: mỗi node đều là một nghiệm; nhánh `start = i+1`.
@@ -44,6 +58,12 @@ void backtrack(int start, vector<int>& path) {
 ### 4. Word Search
 > Tìm từ trong lưới ký tự theo 4 hướng, mỗi ô dùng 1 lần. Đánh dấu `visited`/đổi tạm ký tự rồi **khôi phục** khi quay lui.
 
+## Vì sao bắt buộc undo
+
+`path` (và `used[]`, dấu visited) được **chia sẻ** giữa mọi nhánh đệ quy để tiết kiệm bộ nhớ.
+Sau khi khám phá xong một nhánh, nếu không `pop_back` thì trạng thái "rác" của nhánh đó rò rỉ
+sang nhánh anh em kế tiếp → sinh nghiệm sai. Undo trả trạng thái về đúng như trước khi chọn.
+
 ## Pitfall C++ hay gặp
 
 - **Quên undo** (`pop_back` / bỏ dấu visited) → trạng thái rò rỉ sang nhánh khác.
@@ -53,4 +73,4 @@ void backtrack(int start, vector<int>& path) {
 
 ## Liên hệ
 
-- Là DFS đệ quy ([Tree](../05_tree/README.md)) có thêm bước undo; nhiều bài backtracking + memo trở thành [DP](../09_dp/README.md).
+- Là DFS đệ quy ([Tree](05_tree.md)) có thêm bước undo; nhiều bài backtracking + memo trở thành [DP](09_dp.md).

@@ -2,6 +2,9 @@
 
 Phần lớn bài string quy về: sliding window co giãn, frequency array 26 ký tự, hoặc two pointers từ hai đầu.
 
+> Có bản ghi chú gắn với bài đã giải (kèm ASCII + chứng minh chi tiết) tại
+> [leetcode/03_string/README.md](../leetcode/03_string/README.md). File này là phần **pattern tổng quát**.
+
 ## Các pattern cốt lõi (skeleton C++)
 
 ### Pattern A — Sliding window co giãn
@@ -18,10 +21,22 @@ for (int right = 0; right < n; ++right) {
 }
 ```
 
+Cách chạy — substring dài nhất không lặp ký tự, `s = "abcabcbb"`:
+
+```
+ a b c a b c b b
+[a]                 "a"    len 1
+[a b]               "ab"   len 2
+[a b c]             "abc"  len 3  <- max
+ a[b c a]           gặp 'a' lặp -> co left qua bản 'a' cũ
+   b[c a b]         gặp 'b' lặp -> co left ...
+     ...            đáp án = 3
+```
+
 ### Pattern B — Frequency array 26
 ```cpp
-array<int,26> f{};
-for (char c : s) ++f[c - 'a'];   // giả định chữ thường a-z
+array<int,26> f{};               // {} BẮT BUỘC: zero-init
+for (char c : s) ++f[c - 'a'];   // 'a' cho a-z, 'A' cho A-Z — canh đúng gốc
 ```
 
 ### Pattern C — Two pointers hai đầu (palindrome)
@@ -32,6 +47,15 @@ while (l < r) {
     ++l; --r;
 }
 return true;
+```
+
+Cách chạy — palindrome, bỏ qua ký tự không hợp lệ (`"a#ba"`):
+
+```
+ a # b a
+ L     R    's[L]=a' == 's[R]=a'  -> ok, tiến vào
+   L R      L gặp '#' -> skip -> L tới 'b'
+     LR     L gặp R  -> palindrome!
 ```
 
 ## Bài cốt lõi (5 bài)
@@ -70,13 +94,27 @@ return true;
 
 - Cửa sổ **cố định** độ dài `|p|` + so khớp 2 mảng tần suất (hoặc đếm số vị trí khớp).
 
+## Vì sao sliding window đúng (không bỏ lỡ cửa sổ tốt hơn khi co `left`)
+
+Đặt `g(cửa sổ)` = mức vi phạm điều kiện. Điều kiện phải **đơn điệu**: mở rộng cửa sổ sang
+phải làm `g` **không giảm**. Khi đó:
+
+- **Vứt `left` an toàn**: nếu `[left,right]` đã hỏng, mọi cửa sổ giữ nguyên `left` mà kéo
+  `right` xa hơn cũng hỏng (`g` chỉ tăng) → cái `left` đó hết khả năng tạo cửa sổ lớn hơn.
+- **Không bỏ lỡ tối ưu**: gọi cửa sổ tối ưu `[i*, j*]`. Vì mọi đoạn đầu `[i*, r]` (`r ≤ j*`)
+  cũng hợp lệ, và `left` chỉ tiến + vòng `while` dừng ngay khi hợp lệ → khi `right` chạm `j*`
+  thì `left ≤ i*`, nên cửa sổ ghi nhận dài `≥ j* - i* + 1` = tối ưu.
+
+→ Đây chính là **dấu hiệu nhận biết dùng được sliding window**: "hợp lệ đơn điệu".
+
 ## Pitfall C++ hay gặp
 
-- **`char` có thể signed**: `s[i] - 'a'` phải chắc chắn ký tự trong `a-z`; ký tự > 127 cho index âm.
+- **`char` có thể signed**: `s[i] - 'a'` phải chắc chắn ký tự trong `a-z`; ký tự > 127 cho index âm → ép `(unsigned char)` khi dùng `<cctype>`.
+- **`array<int,26>` phải có `{}`** để zero-init; canh đúng offset (`'a'` vs `'A'`).
 - **`substr` tạo bản sao** O(k) — trong vòng lặp dễ thành O(n·k); ưu tiên so khớp bằng chỉ số.
 - **Nối chuỗi bằng `+`** trong vòng lặp là O(n²) — dùng `+=` / `reserve` / `ostringstream`.
 - Sliding window: kích thước cửa sổ = `right - left + 1`, dễ off-by-one.
 
 ## Liên hệ
 
-- Sliding window ở đây là biến thể co giãn của Pattern C (running) trong [Array](../01_array/README.md); frequency array nối với [Hashing](../02_hashing/README.md).
+- Sliding window ở đây là biến thể co giãn của Pattern C (running) trong [Array](01_array.md); frequency array nối với [Hashing](02_hashing.md).

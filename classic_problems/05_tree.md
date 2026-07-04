@@ -16,6 +16,20 @@ void dfs(TreeNode* node) {
 }
 ```
 
+Thứ tự thăm trên cây mẫu:
+
+```
+        4
+       / \
+      2   6
+     / \ / \
+    1  3 5  7
+
+preorder  (node,L,R): 4 2 1 3 6 5 7
+inorder   (L,node,R): 1 2 3 4 5 6 7   <- BST -> TĂNG DẦN (bất biến hay dùng)
+postorder (L,R,node): 1 3 2 5 7 6 4
+```
+
 ### Pattern B — BFS theo tầng (queue)
 ```cpp
 queue<TreeNode*> q;
@@ -30,6 +44,14 @@ while (!q.empty()) {
     }
     // kết thúc một tầng
 }
+```
+
+Chốt `sz = q.size()` đầu mỗi tầng để tách tầng — đây là mấu chốt:
+
+```
+tầng 0: [4]           sz=1  -> pop 4, push 2,6
+tầng 1: [2,6]         sz=2  -> pop 2,6, push 1,3,5,7
+tầng 2: [1,3,5,7]     sz=4
 ```
 
 ### Pattern C — BST bounds (kiểm tra bất biến)
@@ -66,10 +88,15 @@ bool valid(TreeNode* n, long lo, long hi) {
 
 ### 5. Validate BST
 > Pattern C với bound `(lo, hi)`.
-- Bẫy: **không** chỉ so `node` với con trực tiếp; phải truyền bound lan xuống. Dùng `long` để tránh biên `INT_MIN/MAX`.
+- **Bẫy quan trọng**: **không** chỉ so `node` với con trực tiếp — một node cháu vẫn có thể vi phạm dù cha-con hợp lệ. Phải truyền bound `(lo, hi)` lan xuống. Dùng `long` để tránh biên `INT_MIN/MAX`.
 
 ### 6. Lowest Common Ancestor
 > Với **BST**: đi trái/phải theo so sánh giá trị → O(h). Với **binary tree thường**: đệ quy, node là LCA nếu hai phía chứa hai target.
+
+## Vì sao Space là O(h)
+
+DFS đệ quy tốn stack theo **chiều sâu** đường đang đi, không phải toàn bộ node. Cây cân bằng
+`h ≈ log n` → O(log n); cây lệch (skewed) `h ≈ n` → O(n), và đây là ca dễ **stack overflow**.
 
 ## Pitfall C++ hay gặp
 
@@ -80,4 +107,4 @@ bool valid(TreeNode* n, long lo, long hi) {
 
 ## Liên hệ
 
-- BFS ở đây dùng lại cho [Graph](../08_graph/README.md); đệ quy DFS là nền cho [Backtracking](../11_backtracking/README.md).
+- BFS ở đây dùng lại cho [Graph](08_graph.md); đệ quy DFS là nền cho [Backtracking](11_backtracking.md).

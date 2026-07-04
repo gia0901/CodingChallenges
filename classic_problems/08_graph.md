@@ -22,6 +22,14 @@ while (!q.empty()) {
 }
 ```
 
+BFS lan theo "tầng" = khoảng cách từ nguồn (số cạnh):
+
+```
+ tầng: 2 1 2      từ nguồn S, mỗi vòng queue mở rộng 1 vành đai
+        1 S 1     -> BFS cho shortest path trên đồ thị không trọng số
+        2 1 2
+```
+
 ### Pattern B — Topological sort (Kahn)
 ```cpp
 vector<int> indeg(n, 0);
@@ -35,6 +43,14 @@ while (!q.empty()) {
     for (int v : adj[u]) if (--indeg[v] == 0) q.push(v);
 }
 // order.size() < n  =>  có chu trình
+```
+
+Ý tưởng: lấy dần node **indegree 0** (không còn phụ thuộc), gỡ cạnh của nó:
+
+```
+ A -> B -> D        indeg: A0 B1 C1 D2
+ A -> C -> D        lấy A -> B,C về 0 -> lấy B,C -> D về 0 -> lấy D
+                    order = A B C D   (đủ 4 node -> không có chu trình)
 ```
 
 ### Pattern C — Union-Find (DSU, path compression)
@@ -76,6 +92,12 @@ auto unite = [&](int a, int b){ parent[find(a)] = find(b); };
 ### 6. Number of Connected Components
 > Union mọi cạnh; đếm số root phân biệt = số thành phần.
 
+## Vì sao đánh dấu visited khi PUSH (không phải khi POP)
+
+Nếu chỉ đánh dấu khi pop, một node có thể bị **push nhiều lần** trước khi được pop lần đầu
+→ queue phình to, xử lý trùng, sai đếm tầng. Đánh dấu ngay khi push đảm bảo **mỗi node vào
+queue đúng 1 lần** → tổng O(V + E).
+
 ## Pitfall C++ hay gặp
 
 - **Đánh dấu `visited` khi PUSH** (không phải khi pop) → tránh cùng một node vào queue nhiều lần.
@@ -85,4 +107,4 @@ auto unite = [&](int a, int b){ parent[find(a)] = find(b); };
 
 ## Liên hệ
 
-- BFS theo tầng dùng lại từ [Tree](../05_tree/README.md); DFS đệ quy nối với [Backtracking](../11_backtracking/README.md).
+- BFS theo tầng dùng lại từ [Tree](05_tree.md); DFS đệ quy nối với [Backtracking](11_backtracking.md).
