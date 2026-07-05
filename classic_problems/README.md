@@ -2,6 +2,8 @@
 
 Đây là **index tổng**: bản đồ các topic kinh điển của DSA cho coding interview, **xếp theo tần suất gặp trong phỏng vấn (cao → thấp)**.
 
+> 🎯 Sắp thi coding challenge (Codility/Coderbyte)? Xem [challenge_playbook.md](challenge_playbook.md) — quy trình 90 phút, checklist edge case, reflex overflow, cơ chế nền tảng.
+
 ## Cách dùng tài liệu này
 
 - Mỗi topic là **1 file `.md` riêng** (vd `01_array.md`): liệt kê **core problems**, **pattern/ý tưởng** (kèm skeleton C++ + ASCII minh họa + phần "vì sao đúng"), **complexity mục tiêu**, và **pitfall C++**.
