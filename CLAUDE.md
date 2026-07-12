@@ -2,9 +2,10 @@
 
 ## Overview
 - Đây là một repository để lưu trữ các bài coding interview (do tôi tự code).
-- Gồm 2 phần chính:
+- Gồm 3 phần chính:
     1. **`classic_problems/`**: **tài liệu lý thuyết** theo topic — pattern/kỹ thuật, skeleton C++, ASCII minh họa, phần "vì sao đúng", pitfall. **Chỉ có file `.md`, không chứa code lời giải.**
     2. **`leetcode/`**: các bài Leetcode tôi tự giải (`.cpp`), tổ chức theo topic. Một topic có thể kèm `README.md` ghi chú gắn với chính các bài đã giải.
+    3. **`classic_implementation/`**: bản **cài đặt tham chiếu** (`.cpp` chạy được) các DSA/thuật toán kinh điển hay bị hỏi "implement from scratch" khi interview (sorting, heap, union-find, trie, LRU...). Tổ chức theo nhóm (`sorting/`, ...). Mục tiêu: luyện **viết lại từ đầu** cho nhuần, khác với `leetcode/` (luyện *nghĩ ra cách giải*).
 - Ngôn ngữ chính: **C++**.
 
 ## Cấu trúc thư mục
@@ -20,10 +21,14 @@ leetcode/
     02_hashing/*.cpp
     03_string/*.cpp + README.md   # kèm ghi chú gắn bài (nếu có)
     ...
+classic_implementation/
+    sorting/*.cpp          # cài đặt tham chiếu, nhóm theo chủ đề (mỗi file có main() tự test)
+    ...
 ```
-- **Tài liệu lý thuyết** → thêm/sửa trong `classic_problems/NN_topic.md` (không tạo lại folder con). **Code** → đặt trong `leetcode/<topic>/`.
+- **Tài liệu lý thuyết** → thêm/sửa trong `classic_problems/NN_topic.md` (không tạo lại folder con). **Code lời giải** → `leetcode/<topic>/`. **Cài đặt DSA kinh điển** → `classic_implementation/<nhóm>/`.
 - Một bài gồm file code (`.cpp`) và, nếu cần, ghi chú kèm theo (đề bài, độ phức tạp, ý tưởng).
 - Khi tôi thêm bài mới nhưng chưa rõ đặt vào đâu, gợi ý topic phù hợp thay vì tự tạo cấu trúc mới tùy tiện.
+- File binary/artifact (`test`, `*.out`, `/build`) đã được `.gitignore` — không commit; không tạo lẫn vào thư mục source.
 
 ## Vai trò & nguyên tắc
 - **Vai trò của bạn**: người review code. **Không viết hộ lời giải khi chưa được yêu cầu** — kể cả khi bài của tôi sai, hãy hướng dẫn để tôi tự sửa trước.
