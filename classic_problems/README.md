@@ -27,10 +27,11 @@
 | 11 | Backtracking | [11_backtracking.md](11_backtracking.md) | 4 | ★★☆☆☆ | Sinh tổ hợp/hoán vị, pruning. |
 | 12 | Greedy | [12_greedy.md](12_greedy.md) | 3 | ★★☆☆☆ | Interval scheduling, đổi tiền. |
 | 13 | Math & Bit Manipulation | [13_math_bit.md](13_math_bit.md) | 3 | ★☆☆☆☆ | GCD, bitmask, xử lý overflow. |
+| 14 | Implementation from Scratch | [14_implementation.md](14_implementation.md) | 7 | ★★★☆☆ | Tự cài hash map, heap, trie, DSU; LRU Cache và các bài "Design X"; sorting từ đầu. |
 
-> Tổng ~60 bài cốt lõi. Mục tiêu là nắm **pattern**, không chạy đua số lượng.
+> Tổng ~65 bài cốt lõi. Mục tiêu là nắm **pattern**, không chạy đua số lượng.
 >
-> **Gợi ý ưu tiên khi ít thời gian:** làm chắc topic 1–6 (chiếm phần lớn câu hỏi phỏng vấn) trước, rồi tới 7–9. Topic 10–13 ôn sau cùng.
+> **Gợi ý ưu tiên khi ít thời gian:** làm chắc topic 1–6 (chiếm phần lớn câu hỏi phỏng vấn) trước, rồi tới 7–9 và 14. Topic 10–13 ôn sau cùng.
 
 ## Nguyên tắc học (khớp với CLAUDE.md)
 
@@ -54,3 +55,4 @@
 - [ ] 11. Backtracking
 - [ ] 12. Greedy
 - [ ] 13. Math & Bit Manipulation
+- [ ] 14. Implementation from Scratch
