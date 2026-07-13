@@ -3,6 +3,8 @@
 Đây là **index tổng**: bản đồ các topic kinh điển của DSA cho coding interview, **xếp theo tần suất gặp trong phỏng vấn (cao → thấp)**.
 
 > 🎯 Sắp thi coding challenge (Codility/Coderbyte)? Xem [challenge_playbook.md](challenge_playbook.md) — quy trình 90 phút, checklist edge case, reflex overflow, cơ chế nền tảng.
+>
+> 🔧 Phỏng vấn **Embedded SWE** trên Codility? Xem [embedded_codility_cheatsheet.md](embedded_codility_cheatsheet.md) — 17 mục: pattern array/number + skeleton C++, **bit manipulation**, ring buffer, linked list, kèm bài LeetCode & task Codility mẫu cho từng pattern.
 
 ## Cách dùng tài liệu này
 

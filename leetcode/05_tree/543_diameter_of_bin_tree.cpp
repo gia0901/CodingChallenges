@@ -10,7 +10,7 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
-void dfs(TreeNode* root, int& diameter) {
+void dfs(TreeNode* root, int& res) {
     if (root == nullptr) return;
 
     
