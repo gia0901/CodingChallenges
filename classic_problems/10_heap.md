@@ -64,6 +64,22 @@ Hai heap "quay lưng" vào nhau, median nằm ngay ranh giới:
 ### 3. Merge k Sorted Lists
 > Min-heap chứa đầu mỗi list; pop nhỏ nhất, đẩy node kế của nó vào heap.
 
+## Bài luyện thêm (interview hay gặp)
+
+| Bài | Pattern / ý tưởng | Complexity |
+|-----|-------------------|------------|
+| Top K Frequent Elements | đếm tần suất + heap size k (hoặc bucket sort) | O(n log k) |
+| Find Median from Data Stream | two heaps (Pattern C) | O(log n)/add |
+| Last Stone Weight | max-heap, lấy 2 lớn nhất đập nhau | O(n log n) |
+| Kth Largest Element in a Stream | min-heap size k, `top()` là đáp | O(log k)/add |
+| Task Scheduler | đếm tần suất + greedy (heap / công thức) | O(n) |
+
+- **Top K Frequent**: đếm bằng `unordered_map` rồi heap size k. Cùng bài với topic [Hashing](02_hashing.md); bucket sort cho O(n) nếu muốn tối ưu.
+- **Find Median from Data Stream**: max-heap giữ nửa nhỏ, min-heap giữ nửa lớn, cân bằng kích thước lệch ≤ 1 (Pattern C ở trên). Median lấy từ đỉnh.
+- **Last Stone Weight**: max-heap; mỗi bước pop 2 viên lớn nhất, đập, đẩy phần dư vào lại — mô phỏng thuần.
+- **Kth Largest in a Stream**: giữ min-heap đúng `k` phần tử; `add(x)` push rồi pop nếu quá k → `top()` luôn là phần tử lớn thứ k.
+- **Task Scheduler**: xếp task cách nhau `n` khe; greedy chọn task còn nhiều nhất trước (max-heap theo tần suất), hoặc công thức từ task tần suất cao nhất.
+
 ## Pitfall C++ hay gặp
 
 - **Mặc định `priority_queue` là max-heap**; muốn min-heap dùng `greater<>`.

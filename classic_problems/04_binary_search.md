@@ -90,6 +90,23 @@ feasible: F   F   F   F   T   T   T   T
 
 - Pattern C: `feasible(speed)` = tổng `ceil(pile/speed)` ≤ h. Không gian nghiệm `[1, max(pile)]` đơn điệu theo speed (ăn nhanh hơn thì không thể tốn nhiều giờ hơn).
 
+## Bài luyện thêm (interview hay gặp)
+
+| Bài | Pattern / ý tưởng | Complexity |
+|-----|-------------------|------------|
+| Find Minimum in Rotated Sorted Array | so `nums[mid]` với `nums[right]` | O(log n) |
+| Search a 2D Matrix | coi ma trận như mảng 1D | O(log(m·n)) |
+| Find Peak Element | binary search theo dốc | O(log n) |
+| First Bad Version | lower_bound trên predicate boolean | O(log n) |
+| Capacity to Ship Packages / Koko | binary search trên answer space | O(n log M) |
+
+- **Find Min in Rotated** (bản đối của bài 33): nhánh **giữ mid** (`right=mid`) + `left<right` vì mid là ứng viên. Đã có: [leetcode/04_binary_search/153_find_min_in_rotated_sorted_arr.cpp](../leetcode/04_binary_search/153_find_min_in_rotated_sorted_arr.cpp).
+- **Search a 2D Matrix**: mỗi hàng sort, đầu hàng sau > cuối hàng trước → ánh xạ `idx ↔ (idx/cols, idx%cols)`, binary search trên `[0, m·n)`.
+- **Find Peak Element**: `nums[mid] < nums[mid+1]` → đỉnh nằm bên phải (`left=mid+1`), ngược lại `right=mid`. Luôn tồn tại đỉnh do biên coi như `-∞`.
+- **First Bad Version**: tìm biên `false→true` của `isBad(v)` — đúng khuôn Pattern C, giữ mid (`right=mid`).
+- **Capacity to Ship / Koko**: cùng "binary search trên answer space" — `feasible(x)` đơn điệu theo `x`, tìm `x` nhỏ nhất khả thi. Đã có Koko: [leetcode/04_binary_search/875_koko_eating_bananas.cpp](../leetcode/04_binary_search/875_koko_eating_bananas.cpp).
+- *(Stretch, thường là Hard)* **Median of Two Sorted Arrays** — binary search trên phân hoạch; chỉ đụng nếu muốn thử sức, không phổ biến ở screening.
+
 ## Vì sao đúng & không lặp vô hạn
 
 - **Tính đúng**: mỗi bước loại bỏ nửa **chắc chắn không chứa** đáp án nhờ tính đơn điệu → không gian co một nửa mỗi vòng → O(log n).

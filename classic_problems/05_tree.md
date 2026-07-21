@@ -93,6 +93,26 @@ bool valid(TreeNode* n, long lo, long hi) {
 ### 6. Lowest Common Ancestor
 > Với **BST**: đi trái/phải theo so sánh giá trị → O(h). Với **binary tree thường**: đệ quy, node là LCA nếu hai phía chứa hai target.
 
+## Bài luyện thêm (interview hay gặp)
+
+| Bài | Pattern / ý tưởng | Complexity |
+|-----|-------------------|------------|
+| Same Tree | DFS song song 2 cây | O(n) |
+| Subtree of Another Tree | duyệt + so "Same Tree" tại mỗi node | O(n·m) |
+| Diameter of Binary Tree | DFS trả height, cập nhật max qua node | O(n) |
+| Balanced Binary Tree | DFS trả height, trả -1 khi lệch | O(n) |
+| Binary Tree Right Side View | BFS, lấy node cuối mỗi tầng | O(n) |
+| Kth Smallest in a BST | inorder (tăng dần), dừng ở phần tử k | O(h + k) |
+| Path Sum | DFS trừ dần targetSum tới lá | O(n) |
+| Construct Tree from Preorder & Inorder | root từ preorder, chia trái/phải qua inorder | O(n) |
+
+- **Same Tree / Subtree**: đệ quy so cả cấu trúc lẫn giá trị; Subtree = với mỗi node của cây lớn, thử `isSameTree(node, sub)`.
+- **Diameter / Balanced**: cùng khuôn — DFS trả **height**, nhưng *nhân tiện* cập nhật đáp án qua mỗi node. Diameter = `max(leftH + rightH)`; Balanced = trả `-1` để "lan" tín hiệu mất cân bằng lên, cắt sớm.
+- **Right Side View**: BFS theo tầng (Pattern B), lấy phần tử **cuối** mỗi tầng (hoặc DFS ưu tiên phải, ghi node đầu tiên gặp ở mỗi độ sâu).
+- **Kth Smallest in BST**: inorder cho dãy **tăng dần** → đếm tới `k`; dừng sớm khi đủ (không cần duyệt hết).
+- **Path Sum**: DFS, tới lá kiểm `remain == leafVal`; biến thể Path Sum II gom đường đi (kèm backtracking).
+- **Construct from Pre/Inorder**: phần tử đầu preorder = root; vị trí root trong inorder chia trái/phải; dùng `unordered_map<val,idx>` cho inorder để tra O(1).
+
 ## Vì sao Space là O(h)
 
 DFS đệ quy tốn stack theo **chiều sâu** đường đang đi, không phải toàn bộ node. Cây cân bằng

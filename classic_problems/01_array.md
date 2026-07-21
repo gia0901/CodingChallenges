@@ -107,6 +107,24 @@ for (int x : a) {
 - Pattern C (skeleton ở trên). Mỗi bước chỉ 2 lựa chọn: **nối dài** (`running + x`) hay **bắt đầu lại** (`x`).
 - Bẫy: khởi tạo `best = a[0]` (không phải 0) để xử lý mảng toàn số âm.
 
+## Bài luyện thêm (interview hay gặp)
+
+| Bài | Pattern / ý tưởng | Complexity |
+|-----|-------------------|------------|
+| Best Time to Buy and Sell Stock | running min + max lời nhuận | O(n), O(1) |
+| Product of Array Except Self | prefix × suffix, không dùng chia | O(n), O(1)* |
+| 3Sum | sort + two pointers lồng, skip trùng | O(n²), O(1) |
+| Merge Intervals | sort theo start rồi gộp cụm liền kề | O(n log n) |
+| Sort Colors | Dutch flag: 3 con trỏ `low/mid/high` | O(n), O(1) |
+| Rotate Array | đảo 3 lần: cả mảng → 2 phần | O(n), O(1) |
+
+- **Best Time to Buy/Sell Stock**: duyệt 1 lượt, giữ `minPrice` thấp nhất tới hiện tại, cập nhật `best = max(best, price - minPrice)`. Mua thấp nhất *trước* ngày bán.
+- **Product Except Self**: `res[i]` = tích mọi phần tử trừ `i`. Đi xuôi tích prefix, đi ngược nhân suffix vào chính `res` → không cần mảng phụ (output không tính space).
+- **3Sum**: sort trước; cố định `a[i]`, hai con trỏ tìm cặp `= -a[i]`; **skip giá trị trùng** ở cả `i` lẫn hai con trỏ để tránh bộ ba lặp. Đã có bản của bạn: [leetcode/two_pointers/15_3Sum.cpp](../leetcode/two_pointers/15_3Sum.cpp).
+- **Merge Intervals**: sort theo start; nếu `iv.start <= cụm.end` thì `cụm.end = max(...)`, ngược lại mở cụm mới. Đã có: [leetcode/01_array/56_merge_intervals.cpp](../leetcode/01_array/56_merge_intervals.cpp).
+- **Sort Colors**: phân loại 0/1/2 tại chỗ 1 lượt — `low` biên số 0, `high` biên số 2, `mid` quét; swap về đúng vùng.
+- **Rotate Array** (xoay phải `k`): `reverse` cả mảng, rồi `reverse` `k` phần tử đầu và phần còn lại. Nhớ `k %= n`.
+
 ## Pitfall C++ hay gặp
 
 - **Signed/unsigned**: `nums.size()` là `size_t` (unsigned). `i < nums.size() - 2` **wrap-around** khi `size() < 2`. Ép `(int)nums.size()` hoặc kiểm tra kích thước trước.

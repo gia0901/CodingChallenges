@@ -94,6 +94,22 @@ Cách chạy — palindrome, bỏ qua ký tự không hợp lệ (`"a#ba"`):
 
 - Cửa sổ **cố định** độ dài `|p|` + so khớp 2 mảng tần suất (hoặc đếm số vị trí khớp).
 
+## Bài luyện thêm (interview hay gặp)
+
+| Bài | Pattern / ý tưởng | Complexity |
+|-----|-------------------|------------|
+| Longest Common Prefix | quét dọc từng cột ký tự | O(n·m) |
+| Longest Palindromic Substring | expand around center (2n-1 tâm) | O(n²), O(1) |
+| Palindromic Substrings | expand around center, đếm | O(n²), O(1) |
+| Permutation in String | cửa sổ CỐ ĐỊNH `|p|` + so tần suất | O(n) |
+| Minimum Window Substring | cửa sổ co giãn + need/have (khó hơn) | O(n) |
+
+- **Longest Common Prefix**: so ký tự cùng cột của mọi chuỗi; dừng khi lệch hoặc hết chuỗi ngắn nhất.
+- **Longest Palindromic Substring**: với mỗi trong `2n-1` tâm (n tâm lẻ + n-1 tâm chẵn), **nới hai biên ra** khi còn đối xứng; giữ đoạn dài nhất. Đơn giản, đủ chuẩn interview (khỏi cần Manacher O(n)).
+- **Palindromic Substrings**: cùng "expand around center" nhưng **đếm** mỗi lần nới thành công.
+- **Permutation in String**: hỏi `s2` có chứa hoán vị của `s1` không → **cửa sổ cố định `|s1|`** trượt qua `s2`, so 2 mảng tần suất (cùng khuôn bài 438).
+- **Minimum Window Substring**: cửa sổ **co giãn** tìm đoạn ngắn nhất chứa đủ ký tự của `t`. Giữ `need`/`have` + biến đếm số ký tự đã đủ; mở rộng `right` tới khi đủ, rồi co `left` tối đa. Khó hơn — luyện sau khi chắc 3, 424.
+
 ## Vì sao sliding window đúng (không bỏ lỡ cửa sổ tốt hơn khi co `left`)
 
 Đặt `g(cửa sổ)` = mức vi phạm điều kiện. Điều kiện phải **đơn điệu**: mở rộng cửa sổ sang

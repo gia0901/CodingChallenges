@@ -23,7 +23,9 @@ Trực giác `x & (x-1)` xóa bit 1 thấp nhất — trừ 1 lật chuỗi bit 
 
 ## Số học cơ bản (C++)
 ```cpp
-int gcd(int a, int b) { return b == 0 ? a : gcd(b, a % b); }   // Euclid
+int gcd(int a, int b) { // Euclid
+    return b == 0 ? a : gcd(b, a % b); 
+}   
 // lcm(a,b) = a / gcd(a,b) * b   (chia trước để tránh overflow)
 
 // Sieve of Eratosthenes: mọi số nguyên tố tới N

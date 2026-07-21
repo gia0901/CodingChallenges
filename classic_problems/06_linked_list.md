@@ -91,6 +91,24 @@ return prev; // head mới
 ### 5. Remove Nth Node From End
 > Hai con trỏ cách nhau `n` bước; khi con trước ra khỏi list, con sau ở ngay trước node cần xóa. Dùng dummy để xử lý xóa head.
 
+## Bài luyện thêm (interview hay gặp)
+
+| Bài | Pattern / ý tưởng | Complexity |
+|-----|-------------------|------------|
+| Add Two Numbers | duyệt song song + carry, dummy head | O(n) |
+| Palindrome Linked List | tìm mid + reverse nửa sau + so | O(n), O(1) |
+| Intersection of Two Linked Lists | hai con trỏ đổi làn khi hết | O(n+m), O(1) |
+| Reorder List | mid + reverse nửa sau + trộn xen kẽ | O(n), O(1) |
+| Copy List with Random Pointer | hash map cũ→mới (hoặc chèn xen kẽ) | O(n) |
+| Merge k Sorted Lists | min-heap các đầu list | O(N log k) |
+
+- **Add Two Numbers**: cộng từng chữ số + `carry`, dùng dummy head. Đã có: [leetcode/linked_list/2_add_two_numbers.cpp](../leetcode/linked_list/2_add_two_numbers.cpp).
+- **Palindrome Linked List**: fast/slow tìm mid → reverse nửa sau → so hai nửa. Đạt O(1) space (khác cách đổ ra vector O(n)).
+- **Intersection**: hai con trỏ đi, hết list này thì nhảy sang đầu list kia → sau ≤ 2 lượt chúng gặp nhau ở giao điểm (hoặc cùng `null`).
+- **Reorder List**: kết hợp 3 kỹ thuật nền — tìm mid (fast/slow) + reverse nửa sau + merge xen kẽ. Bài "tổng hợp" hay gặp.
+- **Copy List with Random Pointer**: `unordered_map<old,new>` để nối `random` đúng bản sao; hoặc mẹo chèn node sao xen kẽ để O(1) space.
+- **Merge k Sorted Lists**: min-heap chứa đầu mỗi list, pop nhỏ nhất rồi đẩy node kế. Nối với [Heap](10_heap.md).
+
 ## Pitfall C++ hay gặp
 
 - **Null dereference**: luôn kiểm tra `node && node->next` trước khi đi tiếp.

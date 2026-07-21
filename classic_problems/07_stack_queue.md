@@ -115,6 +115,24 @@ không dùng stack được). `dq.front()` luôn là index của max trong cửa
 > Max của mỗi cửa sổ độ dài `k`. Pattern D — mỗi index vào/ra deque đúng 1 lần → O(n).
 > Nếu bí, giải tạm bằng **max-heap `pair<val,idx>`** O(n log k) rồi tối ưu xuống deque.
 
+## Bài luyện thêm (interview hay gặp)
+
+| Bài | Pattern / ý tưởng | Complexity |
+|-----|-------------------|------------|
+| Evaluate Reverse Polish Notation | stack toán hạng | O(n) |
+| Next Greater Element I / II | monotonic stack (II: mảng vòng, duyệt 2n) | O(n) |
+| Decode String | stack lưu `(chuỗi, số lần)` khi gặp `[` | O(n) |
+| Asteroid Collision | stack mô phỏng va chạm | O(n) |
+| Car Fleet | sort theo vị trí giảm, stack thời gian tới đích | O(n log n) |
+
+- **Evaluate RPN**: gặp số → push; gặp toán tử → pop 2 toán hạng, tính, push lại. Chú ý thứ tự `b op a` (a pop sau).
+- **Next Greater Element**: đúng Pattern B. Bản **II** (mảng vòng): duyệt `2n` lần với chỉ số `i % n` để "vòng lại".
+- **Decode String** (`"3[a2[c]]"`): gặp `[` push `(chuỗi hiện tại, k)`; gặp `]` pop ra, lặp `k` lần. Stack xử lý lồng nhau.
+- **Asteroid Collision**: duyệt, dùng stack; thiên thạch bay trái (`<0`) có thể triệt tiêu các cái bay phải ở đỉnh stack — mô phỏng theo luật va chạm.
+- **Car Fleet**: sort xe theo vị trí giảm dần; tính thời gian tới đích; nếu xe sau tới **không nhanh hơn** đỉnh stack → nhập đội (bị chặn), ngược lại tạo đội mới.
+- *(Stretch, Hard)* **Largest Rectangle in Histogram** — monotonic stack tăng dần, tính diện tích khi pop. Kỹ thuật đẹp nhưng khó, để sau khi chắc Pattern B.
+- *(Backtracking hơn là stack)* **Generate Parentheses** — thực chất là đệ quy sinh chuỗi hợp lệ; xếp ở [Backtracking](11_backtracking.md).
+
 ## Vì sao amortized O(n)/O(1) (monotonic stack & queue-2-stack)
 
 Cả hai nhìn có vòng `while` lồng nhưng **không phải O(n²)**: mỗi phần tử được **đưa vào đúng 1

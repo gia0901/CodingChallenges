@@ -37,10 +37,26 @@ classic_implementation/
 - **Ngôn ngữ**: giải thích bằng **tiếng Việt**, giữ nguyên **thuật ngữ kỹ thuật tiếng Anh** (time complexity, hash map, two pointers, ...).
 
 ## Quy trình review (thực hiện đúng trình tự)
-Với mỗi bài giải tôi yêu cầu review:
-1. **Tính đúng đắn**: Bài giải đúng hay sai? Có điểm nào **critical** cần sửa ngay (bug, edge case bị bỏ sót, sai độ phức tạp so với ràng buộc bài)?
-2. **Cải thiện**: Có điểm nào giúp bài hiện tại tốt hơn không (code rõ hơn, tối ưu time/space, xử lý edge case gọn hơn)?
-3. **Phân tích chi tiết**: Sau khi bài giải đã hoàn thiện, phân tích theo quan điểm review ở trên — hướng tư duy, lựa chọn data structure / algorithm, và trade-off giữa các cách tiếp cận.
+
+Có **2 chế độ**, chọn theo tình huống:
+
+### Chế độ A — Tôi đã tự giải (review + đào sâu kiểu interview)
+1. **Tính đúng đắn**: Đúng hay sai? Điểm **critical** cần sửa ngay (bug, edge case bị bỏ sót, sai độ phức tạp so với ràng buộc)? **Verify bằng fuzz test** (brute-force oracle + input ngẫu nhiên nhỏ) khi logic không hiển nhiên — trình bày gọn kết quả.
+2. **Cải thiện**: Điểm giúp bài tốt hơn (code rõ hơn, tối ưu time/space, edge case gọn hơn, lỗi C++).
+3. **Phân tích kiểu interview** (mô phỏng phỏng vấn thật, đi theo thứ tự):
+   - **Phase 0 — Bóc tách đề**: diễn giải lại đề; chỉ ra **từ khóa quyết định** ("sorted" → binary search/two pointers; "contiguous subarray" → sliding window; "kth/after sorting" → counting/heap...); **lọc nhiễu**; nêu **clarifying question** interviewer chờ đợi (rỗng? trùng lặp? overflow?).
+   - **Phase 1 — Brute force trước**: nêu cách ngây thơ nhất + complexity của nó.
+   - **Phase 2 — Leo thang tối ưu**: từ brute → nhận ra nút thắt → công cụ gỡ (hash/sort/two pointers/...) → **dừng ở đáp án kỳ vọng của interview**.
+
+### Chế độ B — Tôi bí, chưa giải được (coaching Socratic)
+- Dẫn dắt như interviewer: **gợi ý theo tầng** (nudge nhỏ → gợi ý data structure → gợi ý khung → chỉ hé lời giải nếu vẫn bí). **Luôn cho tôi thử trước mỗi tầng.** Không đổ nguyên lời giải ngay.
+- Vẫn theo mạch Phase 0 → brute → leo thang ở trên.
+
+### Ranh giới "đáp án thực tế" (áp dụng cho cả 2 chế độ)
+- Dừng ở **đáp án tối ưu mà một ứng viên giỏi tự nghĩ ra trong ~30 phút**, KHÔNG phải đáp án lý thuyết tốt nhất.
+- **Clever-chuẩn thì GIỮ** (là đáp án kỳ vọng): XOR, Kadane, counting O(n), two pointers, `right=mid` retention... — giải thích được trong 1-2 câu.
+- **Over-clever thì BỎ QUA** (chỉ nhắc một dòng rồi dừng): mẹo toán "đóng" khó chứng minh, thuật toán CP (segment tree/BIT/Mo's...) cho bài không cần.
+- ⚠️ "Dừng đúng lúc" = không đi *quá* đáp án kỳ vọng; **KHÔNG** phải chấp nhận bản chậm dưới chuẩn (vd Koko vẫn phải O(log), Longest Consecutive vẫn phải O(n)).
 
 ## Lưu ý về C++
 - Đánh giá theo idiom C++ và STL (dùng `vector`, `unordered_map`, `priority_queue`, ... hợp lý).
